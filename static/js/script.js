@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 days_to_first_transaction: parseInt(document.getElementById('days_to_first_transaction').value),
                 notification_success_rate: parseFloat(document.getElementById('notification_success_rate').value),
                 total_notifications: parseInt(document.getElementById('total_notifications').value),
-                last_transaction_date: document.getElementById('last_transaction_date').value
+                // last_transaction_date: document.getElementById('last_transaction_date').value
             };
 
             // Make API call

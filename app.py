@@ -1,18 +1,19 @@
 from flask import Flask, render_template, request, jsonify
-import pickle
+import joblib
 import pandas as pd
 from datetime import datetime
 import numpy as np
+import traceback
 
 app = Flask(__name__)
 
 # Load the model
 try:
-    with open('model.pkl', 'rb') as file:
-        model = pickle.load(file)
+    model = joblib.load('model.pkl')
     print("Model loaded successfully!")
 except Exception as e:
     print(f"Error loading model: {e}")
+    traceback.print_exc()
     model = None
 
 @app.route('/')
@@ -24,6 +25,7 @@ def predict():
     try:
         # Get form data
         data = request.get_json()
+        print(data)
         
         # Create feature vector
         features = {
@@ -43,7 +45,7 @@ def predict():
             'days_to_first_transaction': int(data.get('days_to_first_transaction', 0)),
             'notification_success_rate': float(data.get('notification_success_rate', 0)),
             'total_notifications': int(data.get('total_notifications', 0)),
-            'last_transaction_date': data.get('last_transaction_date', '2019-01-10')
+            # 'last_transaction_date': data.get('last_transaction_date', '2019-01-10')
         }
         
         # Convert to DataFrame
