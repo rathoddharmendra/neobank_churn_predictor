@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoBank Churn Predictor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>NeoBank Churn Predictor</h1>
+                </div>
+                <p class="subtitle">Advanced AI-powered customer churn prediction</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-user-cog"></i> Customer Data Input</h2>
+                    <p>Enter customer information to predict churn probability</p>
+                </div>
+
+                <form id="predictionForm" class="prediction-form">
+                    <!-- Account Type Section -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-id-card"></i> Account Type</h3>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="account_type" value="standard" checked>
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Standard</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="account_type" value="premium">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Premium</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="account_type" value="metal">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Metal</span>
+                            </label>
+                        </div>
+                        <!-- Hidden inputs for account types -->
+                        <input type="hidden" id="is_standard" name="is_standard" value="1">
+                        <input type="hidden" id="is_premium" name="is_premium" value="0">
+                        <input type="hidden" id="is_metal" name="is_metal" value="0">
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Personal Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" min="18" max="100" value="34" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_transaction_date">Last Transaction Date</label>
+                                <input type="date" id="last_transaction_date" name="last_transaction_date" value="2019-01-10" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device & Location -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-mobile-alt"></i> Device & Location</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="is_apple" name="is_apple">
+                                    <span class="checkbox-custom"></span>
+                                    Apple Device
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="user_settings_crypto_unlocked" name="user_settings_crypto_unlocked">
+                                    <span class="checkbox-custom"></span>
+                                    Crypto Unlocked
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="is_gb" name="is_gb">
+                                    <span class="checkbox-custom"></span>
+                                    United Kingdom
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="is_pl" name="is_pl">
+                                    <span class="checkbox-custom"></span>
+                                    Poland
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="is_fr" name="is_fr">
+                                    <span class="checkbox-custom"></span>
+                                    France
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Data -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-exchange-alt"></i> Transaction Data</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="total_transactions">Total Transactions</label>
+                                <input type="number" id="total_transactions" name="total_transactions" min="0" value="27" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="avg_transaction_amount">Average Transaction Amount</label>
+                                <input type="number" id="avg_transaction_amount" name="avg_transaction_amount" min="0" step="0.01" value="68.83" required>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="first_month_transactions">First Month Transactions</label>
+                                <input type="number" id="first_month_transactions" name="first_month_transactions" min="0" value="26" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="first_month_active_days">First Month Active Days</label>
+                                <input type="number" id="first_month_active_days" name="first_month_active_days" min="0" max="31" value="13" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="days_to_first_transaction">Days to First Transaction</label>
+                            <input type="number" id="days_to_first_transaction" name="days_to_first_transaction" min="0" value="1" required>
+                        </div>
+                    </div>
+
+                    <!-- Notification Data -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-bell"></i> Notification Data</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="notification_success_rate">Notification Success Rate (%)</label>
+                                <input type="number" id="notification_success_rate" name="notification_success_rate" min="0" max="100" step="0.1" value="100.0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="total_notifications">Total Notifications</label>
+                                <input type="number" id="total_notifications" name="total_notifications" min="0" value="5" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-magic"></i>
+                        Predict Churn Risk
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results-container" style="display: none;">
+                <div class="results-header">
+                    <h2><i class="fas fa-chart-pie"></i> Prediction Results</h2>
+                </div>
+                <div class="results-content">
+                    <div class="prediction-card">
+                        <div class="prediction-icon">
+                            <i id="prediction-icon" class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="prediction-details">
+                            <h3 id="prediction-text">High Churn Risk</h3>
+                            <p id="prediction-description">This customer shows signs of potential churn</p>
+                        </div>
+                    </div>
+                    <div class="probability-meter">
+                        <div class="meter-label">
+                            <span>Churn Probability</span>
+                            <span id="probability-percentage">75%</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div id="probability-fill" class="meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="recommendations">
+                        <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                        <ul id="recommendations-list">
+                            <li>Implement targeted retention campaigns</li>
+                            <li>Offer personalized incentives</li>
+                            <li>Increase engagement through notifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading" class="loading-overlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Analyzing customer data...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
