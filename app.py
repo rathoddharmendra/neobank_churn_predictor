@@ -55,7 +55,8 @@ def predict():
         if model is not None:
             prediction = model.predict(df)[0]
             probability = model.predict_proba(df)[0][1] if prediction == 1 else model.predict_proba(df)[0][0]
-            
+            print(model.predict_proba(df))
+            print(model.predict(df))
             return jsonify({
                 'success': True,
                 'prediction': int(prediction),
