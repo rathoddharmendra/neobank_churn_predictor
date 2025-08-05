@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const probabilityPercentage = document.getElementById('probability-percentage');
         const probabilityFill = document.getElementById('probability-fill');
         const recommendationsList = document.getElementById('recommendations-list');
+        const meterLabel = document.querySelector('.meter-label span');
 
         // Update prediction card
         if (result.prediction === 1) {
@@ -95,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             predictionText.textContent = 'High Churn Risk';
             predictionDescription.textContent = 'This customer shows signs of potential churn';
             probabilityFill.className = 'meter-fill';
+            if (meterLabel) meterLabel.textContent = 'Churn Probability';
         } else {
             // Low churn risk
             predictionCard.className = 'prediction-card low-risk';
@@ -102,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
             predictionText.textContent = 'Low Churn Risk';
             predictionDescription.textContent = 'This customer appears to be stable';
             probabilityFill.className = 'meter-fill low-risk';
+            if (meterLabel) meterLabel.textContent = 'Retention Probability';
         }
 
         // Update probability
