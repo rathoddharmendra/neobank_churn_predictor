@@ -2,6 +2,10 @@
 
 A stunning, modern Flask web application for predicting customer churn using machine learning. This application provides an intuitive interface for inputting customer data and receiving AI-powered churn predictions with actionable recommendations.
 
+### Check-Out Live Website 🧑🏻‍💻
+[NeoBank Churn Predictor](https://neobank-churn-predictor.onrender.com/)
+
+
 ## Features
 
 - 🎨 **Beautiful Modern UI** - Stunning gradient design with smooth animations
